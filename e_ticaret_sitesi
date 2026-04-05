@@ -1,11 +1,34 @@
-class Urun:     def __init__(self, isim, fiyat, stok):         self.isim = isim         self.fiyat = fiyat         self.stok = stok 
- class Sepet:     def __init__(self):         self.urunler = {} 
-     def urun_ekle(self, urun, adet): 
-        if urun.stok >= adet:             if urun in self.urunler: 
-                self.urunler[urun] += adet             else: 
-                self.urunler[urun] = adet             urun.stok -= adet         else: 
-            print("Stok yetersiz") 
-     def urun_sil(self, urun):         if urun in self.urunler:             adet = self.urunler[urun]             urun.stok += adet             del self.urunler[urun] 
-     def toplam_tutar(self): 
-        toplam = 0         for urun, adet in self.urunler.items(): 
-            toplam += urun.fiyat * adet         return toplam 
+class Urun:
+    def __init__(self, isim, fiyat, stok):
+        self.isim = isim
+        self.fiyat = fiyat
+        self.stok = stok
+
+class Sepet:
+    def __init__(self):
+        self.urunler = {}
+
+    def urun_ekle(self, urun, adet):
+        if urun.stok >= adet:
+            if urun.isim in self.urunler:
+                self.urunler[urun.isim]["adet"] += adet
+            else:
+                self.urunler[urun.isim] = {"nesne": urun, "adet": adet}
+            urun.stok -= adet
+        else:
+            pass
+
+    def urun_sil(self, urun):
+        if urun.isim in self.urunler:
+            adet = self.urunler[urun.isim]["adet"]
+            urun.stok += adet
+            del self.urunler[urun.isim]
+            
+        if not self.urunler:
+            self.urunler.clear()
+
+    def toplam_tutar(self):
+        toplam = 0
+        for data in self.urunler.values():
+            toplam += data["nesne"].fiyat * data["adet"]
+        return toplam
