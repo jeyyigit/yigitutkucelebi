@@ -1,0 +1,28 @@
+class Kitap:
+    def __init__(self, isim, yazar, **kwargs):
+        self.isim = isim
+        self.yazar = yazar
+        self.durum = True
+        self.tur = kwargs.get("tur", "Belirtilmemiş")
+
+class Kullanici:
+    def __init__(self, isim):
+        self.isim = isim
+        self.aldigi_kitaplar = []
+
+class Kutuphane:
+    def __init__(self):
+        self.kitaplar = []
+
+    def kitap_ekle(self, kitap):
+        self.kitaplar.append(kitap)
+
+    def odunc_ver(self, kitap, kullanici):
+        if kitap.durum and len(kullanici.aldigi_kitaplar) < 2:
+            kitap.durum = False
+            kullanici.aldigi_kitaplar.append(kitap)
+
+    def iade_al(self, kitap, kullanici):
+        if kitap in kullanici.aldigi_kitaplar:
+            kitap.durum = True
+            kullanici.aldigi_kitaplar.remove(kitap)
