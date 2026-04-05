@@ -1,0 +1,28 @@
+class Gorev:
+    def __init__(self, baslik, aciklama, **kwargs):
+        self.baslik = baslik
+        self.aciklama = aciklama
+        self.tamamlandi_mi = False
+        self.oncelik = kwargs.get("oncelik", "Normal")
+
+class KullaniciGorev:
+    def __init__(self, isim):
+        self.isim = isim
+        self.gorevler = []
+        self.tamamlananlar = []
+
+    def gorev_ekle(self, gorev):
+        for g in self.gorevler:
+            if g.baslik == gorev.baslik:
+                return
+        self.gorevler.append(gorev)
+
+    def gorev_sil(self, gorev):
+        if gorev in self.gorevler:
+            self.gorevler.remove(gorev)
+
+    def gorev_tamamla(self, gorev):
+        if gorev in self.gorevler:
+            gorev.tamamlandi_mi = True
+            self.gorevler.remove(gorev)
+            self.tamamlananlar.append(gorev)
